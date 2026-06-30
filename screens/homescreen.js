@@ -1,5 +1,5 @@
 import{useCallback,useState}from"react";
-import{ScrollView,StyleSheet,Text,TouchableOpacity,View}from"react-native";
+import{ScrollView,StyleSheet,Text,TouchableOpacity,View,Alert}from"react-native";
 import{LinearGradient}from"expo-linear-gradient";
 import{MaterialIcons,Feather,Ionicons}from"@expo/vector-icons";
 import colors from"../utils/colors";
@@ -17,6 +17,7 @@ const[totalBalance,setTotalBalance]=useState(58400);
 const[income,setIncome]=useState(32000);
 const[expense,setExpense]=useState(9600);
 const[accountBalances,setAccountBalances]=useState(accounts);
+const[showMenu,setShowMenu]=useState(false);
 
 useFocusEffect(
 
@@ -89,7 +90,7 @@ contentContainerStyle={styles.scroll}
 
 <View style={styles.header}>
 
-<TouchableOpacity style={styles.iconButton}>
+<TouchableOpacity style={styles.iconButton}onPress={()=>setShowMenu(!showMenu)}>
 
 <Feather
 name="menu"
@@ -103,7 +104,21 @@ color={colors.black}
 Home
 </Text>
 
-<TouchableOpacity style={styles.iconButton}>
+<TouchableOpacity
+
+style={styles.iconButton}
+
+onPress={()=>{
+
+Alert.alert(
+
+"🔔 Notifications",
+"• Welcome back!\n\n• Monthly Insights are ready.\n\n• Smart Spending Assistant is available.\n\n• All accounts are synced.\n\n• No pending alerts."
+);
+
+}}
+
+>
 
 <Ionicons
 name="notifications-outline"
@@ -114,6 +129,95 @@ color={colors.black}
 </TouchableOpacity>
 
 </View>
+{
+showMenu&&(
+
+<View style={styles.menu}>
+
+<TouchableOpacity
+style={styles.menuItem}
+onPress={()=>{
+setShowMenu(false);
+navigation.navigate("Profile");
+}}
+>
+
+<Feather
+name="user"
+size={20}
+color={colors.black}
+/>
+
+<Text style={styles.menuText}>
+Profile
+</Text>
+
+</TouchableOpacity>
+
+<TouchableOpacity
+style={styles.menuItem}
+onPress={()=>{
+setShowMenu(false);
+navigation.navigate("About");
+}}
+>
+
+<Ionicons
+name="information-circle-outline"
+size={20}
+color={colors.black}
+/>
+
+<Text style={styles.menuText}>
+About
+</Text>
+
+</TouchableOpacity>
+
+<TouchableOpacity
+style={styles.menuItem}
+onPress={()=>{
+setShowMenu(false);
+
+Alert.alert(
+"Logout",
+"Are you sure you want to logout?",
+[
+{
+text:"Cancel",
+style:"cancel"
+},
+{
+text:"Logout",
+onPress:()=>navigation.replace("Login")
+}
+]
+);
+
+}}
+>
+
+<MaterialIcons
+name="logout"
+size={20}
+color={colors.darkPink}
+/>
+
+<Text
+style={[
+styles.menuText,
+{color:colors.darkPink}
+]}
+>
+Logout
+</Text>
+
+</TouchableOpacity>
+
+</View>
+
+)
+}
 
 <LinearGradient
 
@@ -682,6 +786,34 @@ marginTop:4,
 fontSize:13,
 fontWeight:"700",
 color:colors.green
-}
+},
 
+menu:{
+position:"absolute",
+top:70,
+left:20,
+backgroundColor:"white",
+borderRadius:16,
+paddingVertical:10,
+width:200,
+elevation:8,
+zIndex:999,
+shadowColor:"#000",
+shadowOpacity:0.15,
+shadowRadius:8
+},
+
+menuItem:{
+flexDirection:"row",
+alignItems:"center",
+paddingHorizontal:18,
+paddingVertical:14
+},
+
+menuText:{
+fontSize:16,
+marginLeft:12,
+color:colors.black,
+fontWeight:"600"
+}
 });

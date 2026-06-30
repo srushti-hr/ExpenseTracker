@@ -16,6 +16,7 @@ import{transactions}from"../utils/data";
 export default function HistoryScreen({navigation}){
 
 const[search,setSearch]=useState("");
+const[sortType,setSortType]=useState("Latest");
 const[list,setList]=useState([]);
 
 useFocusEffect(
@@ -38,7 +39,23 @@ setList([
 const filtered=list.filter(item=>
 item.title.toLowerCase().includes(search.toLowerCase())||
 item.category.toLowerCase().includes(search.toLowerCase())
-);
+).sort((a,b)=>{
+
+if(sortType==="Highest"){
+return Math.abs(b.amount)-Math.abs(a.amount);
+}
+
+if(sortType==="Lowest"){
+return Math.abs(a.amount)-Math.abs(b.amount);
+}
+
+if(sortType==="Oldest"){
+return new Date(a.date)-new Date(b.date);
+}
+
+return new Date(b.date)-new Date(a.date);
+
+});
 
 return(
 
@@ -82,7 +99,34 @@ style={styles.input}
 />
 
 </View>
+<TouchableOpacity
+style={styles.sortButton}
+onPress={()=>{
 
+if(sortType==="Latest"){
+setSortType("Oldest");
+}else if(sortType==="Oldest"){
+setSortType("Highest");
+}else if(sortType==="Highest"){
+setSortType("Lowest");
+}else{
+setSortType("Latest");
+}
+
+}}
+>
+
+<MaterialIcons
+name="sort"
+size={20}
+color={colors.black}
+/>
+
+<Text style={styles.sortText}>
+Sort : {sortType}
+</Text>
+
+</TouchableOpacity>
 <FlatList
 
 data={filtered}
@@ -220,6 +264,24 @@ marginTop:4,
 fontSize:13,
 textAlign:"right",
 color:colors.grey
+},
+sortButton:{
+backgroundColor:"white",
+padding:14,
+borderRadius:15,
+marginBottom:18,
+flexDirection:"row",
+alignItems:"center",
+justifyContent:"center",
+borderWidth:1,
+borderColor:colors.border
+},
+
+sortText:{
+marginLeft:8,
+fontSize:16,
+fontWeight:"700",
+color:colors.black
 }
 
 });

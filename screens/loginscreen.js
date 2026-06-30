@@ -1,7 +1,45 @@
-import{StyleSheet,Text,TextInput,TouchableOpacity,View}from"react-native";
+import{StyleSheet,Text,TextInput,TouchableOpacity,View,Alert}from"react-native";
+import{useState}from"react";
+
 import colors from"../utils/colors";
 
+
 export default function LoginScreen({navigation}){
+const[email,setEmail]=useState("");
+const[password,setPassword]=useState("");
+
+function login(){
+
+if(
+email.trim()===""||
+password.trim()===""
+){
+
+Alert.alert(
+"Missing Details",
+"Please enter both email and password."
+);
+
+return;
+
+}
+
+const emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if(!emailRegex.test(email.trim())){
+
+Alert.alert(
+"Invalid Email",
+"Please enter a valid email address."
+);
+
+return;
+
+}
+
+navigation.replace("Home");
+
+}
 
 return(
 <View style={styles.container}>
@@ -15,8 +53,10 @@ Track every rupee beautifully
 </Text>
 
 <TextInput
-placeholder="Username"
+placeholder="Email"
 placeholderTextColor={colors.grey}
+value={email}
+onChangeText={setEmail}
 style={styles.input}
 />
 
@@ -24,12 +64,14 @@ style={styles.input}
 placeholder="Password"
 placeholderTextColor={colors.grey}
 secureTextEntry
+value={password}
+onChangeText={setPassword}
 style={styles.input}
 />
 
 <TouchableOpacity
 style={styles.button}
-onPress={()=>navigation.replace("Home")}
+onPress={login}
 >
 
 <Text style={styles.buttonText}>

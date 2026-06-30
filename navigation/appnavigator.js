@@ -10,6 +10,7 @@ import ProfileScreen from"../screens/profilescreen";
 import AccountsScreen from"../screens/accountsscreen";
 import TransactionDetailsScreen from"../screens/transactiondetailsscreen";
 import AssistantScreen from"../screens/assistantscreen";
+import AboutScreen from"../screens/aboutscreen";
 const Stack=createNativeStackNavigator();
 
 export default function AppNavigator(){
@@ -73,6 +74,10 @@ component={AssistantScreen}
 options={{
 headerShown:false
 }}/>
+<Stack.Screen
+name="About"
+component={AboutScreen}
+/>
 </Stack.Navigator>
 );
 }

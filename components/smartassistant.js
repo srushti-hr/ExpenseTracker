@@ -349,16 +349,44 @@ export default function SmartAssistant({ transactions }) {
         </View>
       )}
       <View style={styles.inputContainer}>
-      <TextInput
-        placeholder="Ask your own question..."
-        value={question}
-        onChangeText={setQuestion}
-        style={styles.input}
-      />
+      <View style={styles.inputContainer}>
 
-      <TouchableOpacity style={styles.button} onPress={() => askAssistant(question)}>
-        <Text style={styles.buttonText}>Ask Assistant</Text>
-      </TouchableOpacity>
+<TextInput
+placeholder="Custom questions coming soon..."
+editable={false}
+style={[
+styles.input,
+{
+backgroundColor:"#F8F8F8",
+color:"#888"
+}
+]}
+/>
+
+<TouchableOpacity
+style={[
+styles.button,
+{
+backgroundColor:"#D8D8D8"
+}
+]}
+disabled
+>
+
+<Text
+style={[
+styles.buttonText,
+{
+color:"#666"
+}
+]}
+>
+Coming Soon
+</Text>
+
+</TouchableOpacity>
+
+</View>
     </View>
     </View>
   );

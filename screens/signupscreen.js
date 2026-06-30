@@ -10,6 +10,32 @@ const[password,setPassword]=useState("");
 const[confirmPassword,setConfirmPassword]=useState("");
 
 function signup(){
+if(
+username.trim()===""||
+email.trim()===""||
+password.trim()===""||
+confirmPassword.trim()===""
+){
+
+Alert.alert(
+"Missing Details",
+"Please fill all the fields."
+);
+
+return;
+}
+const emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if(!emailRegex.test(email.trim())){
+
+Alert.alert(
+"Invalid Email",
+"Please enter a valid email address."
+);
+
+return;
+
+}
 
 if(password!==confirmPassword){
 Alert.alert("Error","Passwords do not match");

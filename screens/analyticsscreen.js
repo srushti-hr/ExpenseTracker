@@ -1,7 +1,8 @@
-import{ScrollView,StyleSheet,Text,View}from"react-native";
+import{ScrollView,StyleSheet,Text,View,TouchableOpacity}from"react-native";
 import{PieChart,BarChart}from"react-native-chart-kit";
 import{Dimensions}from"react-native";
 import colors from"../utils/colors";
+import{MaterialIcons}from"@expo/vector-icons";
 
 const width=Dimensions.get("window").width;
 
@@ -44,10 +45,27 @@ return(
 style={styles.container}
 showsVerticalScrollIndicator={false}
 >
+<View style={styles.header}>
+
+<TouchableOpacity
+onPress={()=>navigation.goBack()}
+>
+
+<MaterialIcons
+name="arrow-back"
+size={28}
+color={colors.black}
+/>
+
+</TouchableOpacity>
 
 <Text style={styles.heading}>
 Insights
 </Text>
+
+<View style={{width:28}}/>
+
+</View>
 
 <View style={styles.card}>
 
@@ -164,13 +182,18 @@ flex:1,
 backgroundColor:colors.background,
 padding:20
 },
-
-heading:{
-fontSize:30,
-fontWeight:"700",
-color:colors.black,
+header:{
+flexDirection:"row",
+justifyContent:"space-between",
+alignItems:"center",
 marginTop:15,
 marginBottom:20
+},
+
+heading:{
+fontSize:28,
+fontWeight:"700",
+color:colors.black,
 },
 
 card:{

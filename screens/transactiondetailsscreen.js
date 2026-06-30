@@ -22,10 +22,27 @@ return(
 style={styles.container}
 contentContainerStyle={styles.scroll}
 >
+<View style={styles.header}>
+
+<TouchableOpacity
+onPress={()=>navigation.goBack()}
+>
+
+<MaterialIcons
+name="arrow-back"
+size={28}
+color={colors.black}
+/>
+
+</TouchableOpacity>
 
 <Text style={styles.heading}>
 Transaction Details
 </Text>
+
+<View style={{width:28}}/>
+
+</View>
 
 <View
 style={[
@@ -183,16 +200,22 @@ container:{
 flex:1,
 backgroundColor:colors.background
 },
+header:{
+flexDirection:"row",
+justifyContent:"space-between",
+alignItems:"center",
+marginTop:10,
+marginBottom:25
+},
 
 scroll:{
 padding:20
 },
 
 heading:{
-fontSize:30,
+fontSize:26,
 fontWeight:"700",
-marginTop:20,
-marginBottom:20
+color:colors.black
 },
 
 amountCard:{

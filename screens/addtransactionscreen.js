@@ -152,6 +152,24 @@ type==="Expense"
 showsVerticalScrollIndicator={false}
 contentContainerStyle={styles.scroll}
 >
+<View style={styles.header}>
+
+<TouchableOpacity
+onPress={()=>navigation.goBack()}
+>
+
+<MaterialIcons
+name="arrow-back"
+size={28}
+color={colors.black}
+/>
+
+</TouchableOpacity>
+
+
+<View style={{width:28}}/>
+
+</View>
 
 <Text style={styles.heading}>
 Add Transaction
@@ -635,11 +653,17 @@ scroll:{
 padding:20
 },
 
+header:{
+flexDirection:"row",
+justifyContent:"space-between",
+alignItems:"center",
+marginTop:10,
+marginBottom:25
+},
+
 heading:{
-fontSize:30,
+fontSize:28,
 fontWeight:"700",
-marginTop:15,
-marginBottom:25,
 color:colors.black
 },
 

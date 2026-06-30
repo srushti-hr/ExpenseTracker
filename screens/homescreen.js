@@ -419,7 +419,7 @@ color={colors.green}
 />
 
 <Text style={styles.analyticsText}>
-Analytics
+Insights
 </Text>
 
 </TouchableOpacity>

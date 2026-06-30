@@ -129,6 +129,14 @@ value={transaction.note||"No Notes"}
 
 <TouchableOpacity
 style={styles.editButton}
+onPress={()=>
+navigation.navigate(
+"AddTransaction",
+{
+transaction
+}
+)
+}
 >
 
 <Text style={styles.editText}>
@@ -214,8 +222,7 @@ padding:20
 
 heading:{
 fontSize:26,
-fontWeight:"700",
-color:colors.black
+fontWeight:"700"
 },
 
 amountCard:{

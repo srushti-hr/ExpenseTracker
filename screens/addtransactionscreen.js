@@ -35,9 +35,10 @@ const accounts=[
 "Gift Card"
 ];
 
-export default function AddTransactionScreen({navigation}){
+export default function AddTransactionScreen({navigation,route}){
 
-const[type,setType]=useState("Expense");
+const editingTransaction=route.params?.transaction;
+const[type,setType]=useState(editingTransaction?.type??"Expense");
 const[transactionMode,setTransactionMode]=useState("Current");
 
 const today=new Date();
@@ -53,14 +54,14 @@ hour:"2-digit",
 minute:"2-digit"
 });
 
-const[amount,setAmount]=useState("");
-const[category,setCategory]=useState("");
-const[source,setSource]=useState("");
-const[date,setDate]=useState(defaultDate);
-const[time,setTime]=useState(defaultTime);
+const[amount,setAmount]=useState(editingTransaction?String(Math.abs(editingTransaction.amount)):"");
+const[category,setCategory]=useState(editingTransaction?.category??"");
+const[source,setSource]=useState(editingTransaction?.account??editingTransaction?.source??"");
+const[date,setDate]=useState(editingTransaction?.date??defaultDate);
+const[time,setTime]=useState(editingTransaction?.time??defaultTime);
 const[showDatePicker,setShowDatePicker]=useState(false);
 const[showTimePicker,setShowTimePicker]=useState(false);
-const[notes,setNotes]=useState("");
+const[notes,setNotes]=useState(editingTransaction?.note??"");
 
 const currentCategories=
 type==="Expense"
@@ -93,10 +94,8 @@ return;
 
 const newTransaction={
 
-id:Date.now(),
-
+id:editingTransaction?.id??Date.now(),
 type,
-
 title:category,
 
 category,
@@ -121,15 +120,46 @@ note:notes.trim()===""?"No Notes":notes.trim()
 const oldTransactions=
 await loadTransactions();
 
-const updatedTransactions=[
+let updatedTransactions;
+
+if(editingTransaction){
+
+updatedTransactions=
+oldTransactions.map(item=>
+
+item.id===editingTransaction.id
+?
+newTransaction
+:
+item
+
+);
+
+}else{
+
+updatedTransactions=[
 newTransaction,
 ...oldTransactions
 ];
 
+}
+
 await saveTransactions(updatedTransactions);
+
+if(editingTransaction){
+
+navigation.replace(
+"TransactionDetails",
+{
+transaction:newTransaction
+}
+);
+
+}else{
 
 navigation.goBack();
 
+}
 }
 
 return(
@@ -571,7 +601,7 @@ colors.black
 
 >
 
-Save Transaction
+{editingTransaction?"Update Transaction":"Save Transaction"}
 
 </Text>
 
